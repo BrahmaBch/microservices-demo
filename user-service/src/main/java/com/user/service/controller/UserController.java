@@ -21,7 +21,7 @@ public class UserController {
 	
 	@GetMapping("/getString")
 	public String getString() {
-		return "getString method called";
+		return "getString user service called";
 	}
 
 	@PostMapping("/save-user")
