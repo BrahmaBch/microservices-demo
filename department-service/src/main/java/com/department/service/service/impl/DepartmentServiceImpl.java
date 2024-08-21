@@ -27,12 +27,12 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
 	@Override
-	public Result findByDepartmentID(Long id) {
-		 Department department1 = departmentDAO.findByDepartmentId(id);
+	public Result findByDepartmentID(Long departmentId) {
+		 Department department1 = departmentDAO.findByDepartmentId(departmentId);
 	        Result result = new Result();
 	        result.setData(department1);
 	        result.setStatusCode(HttpStatus.OK.value());
-	        result.setSuccesMessage("Department saved successfully");
+	        result.setSuccesMessage("Department get successfully");
         return result;
 	}
 }

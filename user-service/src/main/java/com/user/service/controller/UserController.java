@@ -1,5 +1,7 @@
 package com.user.service.controller;
 
+import com.user.service.VO.ResponseTemplate;
+import com.user.service.exception.ResourceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -7,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.user.service.dto.Result;
-import com.user.service.entity.UserEnity;
+import com.user.service.entity.UserEntity;
 import com.user.service.service.UserService;
 
 @RestController
@@ -25,7 +27,7 @@ public class UserController {
 	}
 
 	@PostMapping("/save-user")
-	public ResponseEntity<Result> saveUser(@RequestBody UserEnity user) {
+	public ResponseEntity<Result> saveUser(@RequestBody UserEntity user) {
 		log.info("<<<<<<<<<<<  start saveUser() ");
 		try {
 			if (user.getUserFirstName() != null || !user.getUserFirstName().isEmpty()) {
@@ -55,6 +57,27 @@ public class UserController {
 	        log.error("Unexpected error: " + e.getMessage());
 	        return new ResponseEntity<>(new Result("Error", "An unexpected error occurred"), HttpStatus.INTERNAL_SERVER_ERROR);
 	    }
+	}
+
+	@GetMapping("/getUserWithDepartment/{userId}")
+	public ResponseEntity<Result> getByUserWithDepartment(@PathVariable Long userId) {
+		log.info("<<<<<<<<<<< start getByUserWithDepartment() ");
+		Result result = new Result();
+		try {
+			ResponseTemplate userResult = userService.getByUserWithDepartment(userId);
+			result.setStatusCode(HttpStatus.OK.value());
+			result.setSuccesMessage("User find successfully");
+			result.setData(userResult);
+			if (userResult != null) {
+				log.info(">>>>>>>>> end getByUserWithDepartment() ");
+				return new ResponseEntity<>(result, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>(new Result("Error", "User not found"), HttpStatus.NOT_FOUND);
+			}
+		} catch (Exception | ResourceNotFoundException e) {
+			log.error("Unexpected error: " + e.getMessage());
+			return new ResponseEntity<>(new Result("Error", "An unexpected error occurred"), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 }

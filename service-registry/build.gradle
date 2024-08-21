@@ -1,0 +1,42 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '2.6.12'
+	id 'io.spring.dependency-management' version '1.0.12.RELEASE'
+}
+
+group = 'com.msdemo'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '11'
+}
+
+repositories {
+	mavenCentral()
+}
+
+ext {
+	set('springCloudVersion', '2021.0.3')
+}
+
+dependencies {
+	// Spring Boot Starter Dependencies
+	implementation 'org.springframework.boot:spring-boot-starter'
+
+	// Spring Cloud Dependencies for Eureka Server
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-server'
+
+	// Test Dependencies
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

@@ -40,11 +40,11 @@ public class DepartmentController {
 		}
 	}
 	
-	@GetMapping("/get-department/{id}")
-	public ResponseEntity<Result> getByDepartmentID(@PathVariable Long id) {
+	@GetMapping("/get-department/{departmentId}")
+	public ResponseEntity<Result> getByDepartmentID(@PathVariable("departmentId") Long departmentId) {
 	    log.info("<<<<<<<<<<< start getByDepartmentID() ");
 	    try {
-	    	Result departmentResult = departmentService.findByDepartmentID(id);
+	    	Result departmentResult = departmentService.findByDepartmentID(departmentId);
 	        if (departmentResult != null) {
 	            log.info(">>>>>>>>> end getByDepartmentID() ");
 	            return new ResponseEntity<>(departmentResult, HttpStatus.OK);

@@ -7,5 +7,5 @@ public interface DepartmentService {
 
     public Result saveDepartment(Department department);
 
-	public Result findByDepartmentID(Long id);
+	public Result findByDepartmentID(Long departmentId);
 }
